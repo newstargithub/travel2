@@ -1,0 +1,55 @@
+buildscript {
+    ext.kotlin_version = '1.3.41'
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        mavenCentral()
+//        mavenLocal()
+//        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+//        maven {
+//            credentials {
+//                username "MvnRead"
+//                password "reaDAct111"
+//
+//            }
+//            url "http://mvn.cloud.alipay.com/nexus/content/repositories/releases/"
+//        }
+//        maven {
+//            url 'http://maven.aliyun.com/nexus/content/repositories/google/'
+//            name 'aliyun-google'
+//        }
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        //gradle插件版本
+        classpath 'com.android.tools.build:gradle:3.2.1'
+//        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/google' }
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        mavenCentral()
+        google()
+        jcenter()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
