@@ -12,6 +12,10 @@ import 'package:roll_demo/util/toast.dart';
 /// 编辑日记数据模型
 class DiaryModel extends ViewStateLoadModel<Diary>{
 
+  int currentPosition = 0; //当前获取焦点的位置
+  TextEditingController currentEditController;//当前获取焦点编辑框的控制器
+  FocusNode currentFocusNode;
+
   /// 源数据
   Diary item;
 

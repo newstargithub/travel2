@@ -7,7 +7,7 @@ import 'package:roll_demo/generated/i18n.dart';
 import 'package:roll_demo/model/repository/WeatherRepository.dart';
 import 'package:roll_demo/net/storage_manager.dart';
 
-/// 本地化语言
+/// 本地化语言,设置
 class LocaleModel extends ChangeNotifier {
 
   static const localeValueList = ['', 'zh-CN', 'en'];
@@ -15,17 +15,23 @@ class LocaleModel extends ChangeNotifier {
   int _localeIndex = 0;
 
   String kLocaleIndex = "kLocaleIndex";
+  String kShowBottomNavigationBar = "kShowBottomNavigationBar";
 
   AMapLocation _location;
 
   IWeather _weather;
 
+  bool _showBottomNavigationBar;
+
   LocaleModel() {
     //?? value 为空时，返回默认值value
     _localeIndex = StorageManager.sharedPreferences.getInt(kLocaleIndex) ?? 0;
+    _showBottomNavigationBar = StorageManager.sharedPreferences.getBool(kShowBottomNavigationBar) ?? true;
   }
 
   int get localeIndex => _localeIndex;
+
+  bool get showBottomNavigationBar => _showBottomNavigationBar;
 
   Locale get locale {
     if (_localeIndex > 0) {
@@ -42,6 +48,13 @@ class LocaleModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// 显示隐藏底部导航栏
+  switchBottomNavigationBar() {
+    _showBottomNavigationBar = !_showBottomNavigationBar;
+    StorageManager.sharedPreferences.setBool(kShowBottomNavigationBar, _showBottomNavigationBar);
+    notifyListeners();
+  }
+
   static String localeName(index, context) {
     switch (index) {
       case 0:
@@ -55,6 +68,7 @@ class LocaleModel extends ChangeNotifier {
     }
   }
 
+  /// 获取定位
   Future<AMapLocation> get location async {
     if (_location == null) {
       _location = await getLocation();
@@ -62,6 +76,7 @@ class LocaleModel extends ChangeNotifier {
     return _location;
   }
 
+  /// 获取天气
   Future<IWeather> get weather async {
     if (_weather == null) {
       var mapLocation = await location;

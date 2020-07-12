@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:roll_demo/bean/Diary.dart';
+import 'package:roll_demo/bean/update_item_model.dart';
 import 'package:roll_demo/generated/i18n.dart';
 import 'package:roll_demo/model/diary_list_model.dart';
 import 'package:roll_demo/provider/ProviderWidget.dart';
@@ -17,7 +18,7 @@ import 'package:roll_demo/util/route.dart';
 import 'package:roll_demo/widget/ViewStateWidget.dart';
 import 'package:roll_demo/widget/WeatherFloatWidget.dart';
 import 'package:roll_demo/widget/app/diary_item.dart';
-import 'package:roll_demo/widget/app/diary_item2.dart';
+import 'package:roll_demo/widget/app/diary_card.dart';
 
 import 'diary/diary_model.dart';
 
@@ -28,22 +29,6 @@ class MainPage extends StatefulWidget {
   }
 }
 
-class UpdateItemModel {
-  String appIcon; //App图标
-  String appName; //App名称
-  String appSize; //App大小
-  String appDate; //App更新日期
-  String appDescription; //App更新文案
-  String appVersion; //App版本
-  //构造函数语法糖，为属性赋值
-  UpdateItemModel(
-      {this.appIcon,
-      this.appName,
-      this.appSize,
-      this.appDate,
-      this.appDescription,
-      this.appVersion});
-}
 
 /// 单独封装一个UpdatedItem Widget 专门用于构建列表项UI
 
@@ -250,7 +235,7 @@ class UpdatedItem extends StatelessWidget {
             NavigatorUtils.pushNamed(context, DIARY_DETAIL_PAGE, arguments: model.id);
           },
 //      child: DiaryItem(model: model),
-        child: DiaryItem2(bean: model),
+        child: DiaryCard(bean: model),
     );
   }
 }

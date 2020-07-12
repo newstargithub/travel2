@@ -4,8 +4,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 import 'package:roll_demo/bean/Diary.dart';
 import 'package:roll_demo/generated/i18n.dart';
+import 'package:roll_demo/model/ThemeModel.dart';
+import 'package:roll_demo/model/UserModel2.dart';
 import 'package:roll_demo/net/storage_manager.dart';
 import 'package:roll_demo/res/colors.dart';
 import 'package:roll_demo/res/dimens.dart';
@@ -46,10 +49,13 @@ class _SaveImagePageState extends State<SaveImage> {
 
   bool showBorder;
 
+  bool showAuthor;
+
   @override
   void initState() {
     super.initState();
     showBorder = SpUtil.getBool(Constant.save_image_show_border, defValue: true);
+    showAuthor = SpUtil.getBool(Constant.save_image_show_author, defValue: true);
   }
 
   @override
@@ -58,6 +64,8 @@ class _SaveImagePageState extends State<SaveImage> {
     var args = ModalRoute.of(context).settings.arguments;
     debugPrint("SaveImage arguments $args");
     Diary bean = args;
+    var themeModel = Provider.of<ThemeModel>(context);
+    Color backgroundColor = themeModel.theme.scaffoldBackgroundColor;
     // 页面框架
     return Scaffold(
       appBar: PreferredSize(
@@ -72,12 +80,24 @@ class _SaveImagePageState extends State<SaveImage> {
                       showBorder = !showBorder;
                       SpUtil.putBool(Constant.save_image_show_border, showBorder);
                     });
+                  } else if(result == WhyFarther.smarter) {
+                    setState(() {
+                      showAuthor = !showAuthor;
+                      SpUtil.putBool(Constant.save_image_show_author, showAuthor);
+                    });
                   }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<WhyFarther>>[
                   PopupMenuItem<WhyFarther>(
                     value: WhyFarther.harder,
-                    child: new Text(showBorder ? S.of(context).hide_border : S.of(context).show_border),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(showBorder ? S.of(context).hide_border : S.of(context).show_border),
+                    ),
+                  ),
+                  PopupMenuItem<WhyFarther>(
+                    value: WhyFarther.smarter,
+                    child: new Text(showAuthor ? S.of(context).hide_author : S.of(context).show_author),
                   ),
                   /*const PopupMenuItem<WhyFarther>(
                  value: WhyFarther.smarter,
@@ -89,16 +109,14 @@ class _SaveImagePageState extends State<SaveImage> {
           ),
           preferredSize: Size.fromHeight(Dimens.app_bar_height)
       ),
-//      MyAppBar(
-//        title: S.of(context).save_image,
-//      ),
       body: Column(
         children: <Widget>[
           Expanded(
             flex: 1,
             child: SingleChildScrollView(
                 child: Container(
-                  margin: EdgeInsets.only(left: 10.0, top: 10.0, right: 10.0, bottom: 10), //容器外填充
+                  margin: EdgeInsets.only(left: 10.0, top: 10.0,
+                      right: 10.0, bottom: 10), //容器外填充
                   decoration: BoxDecoration(//背景装饰
                       boxShadow: [ //卡片阴影
                         BoxShadow(
@@ -117,18 +135,22 @@ class _SaveImagePageState extends State<SaveImage> {
                           : EdgeInsets.all(0.0),
                       color: _boxColor,
                       child: Container(
-                        color: Colors.white,
+                        color: backgroundColor,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Container(
                               width: double.infinity,
                               // 内容图片
                               child: DiaryView(bean),
                             ),
-                            Gaps.vGap16,
+                            _buildAuthorWidget(context),
                             FlatButton.icon(
                               icon: Icon(Icons.apps, color: Theme.of(context).accentColor),
-                              label: Text(S.of(context).app_name, style: TextStyles.textDark16),
+                              label: Text(S.of(context).app_name,
+                                style: TextStyles.textMiddle,
+                                textAlign: TextAlign.center,
+                              ),
                               onPressed: (){
 
                               },
@@ -144,21 +166,7 @@ class _SaveImagePageState extends State<SaveImage> {
           // 操作栏，选择背景色
           Column(
             children: <Widget>[
-              Container(
-                height: 80,
-                child: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                  scrollDirection: Axis.horizontal,
-                  itemExtent: 80,
-                  children: <Widget>[
-                    _buildColorContainer(Colours.cyan),
-                    _buildColorContainer(Colours.brown),
-                    ...Colors.primaries.map((MaterialColor color) {
-                      return _buildColorContainer(color.shade200);
-                    }).toList(),
-                  ],
-                ),
-              ),
+              _buildSelectBorderColor(),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -263,6 +271,41 @@ class _SaveImagePageState extends State<SaveImage> {
     var dir = StorageManager.externalStorageDirectory.path;
     String path = "$dir/$name";
     return path;
+  }
+
+  /// 显示作者
+  _buildAuthorWidget(BuildContext context) {
+    var userModel = Provider.of<UserModel>(context);
+    return showAuthor && userModel.hasUser ?
+        Container(
+          width: double.infinity,
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+          child: Text("@${userModel.user.nickname}",
+            textAlign: TextAlign.right,
+            textWidthBasis: TextWidthBasis.parent,
+          ),
+        )
+     : Gaps.vGap16;
+  }
+
+  /// 选择边框颜色栏
+  _buildSelectBorderColor() {
+    return showBorder ? Container(
+      height: 80,
+      child: ListView(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+        scrollDirection: Axis.horizontal,
+        itemExtent: 80,
+        children: <Widget>[
+          _buildColorContainer(Colours.cyan),
+          _buildColorContainer(Colours.brown),
+          ...Colors.primaries.map((MaterialColor color) {
+            return _buildColorContainer(color.shade200);
+          }).toList(),
+        ],
+      ),
+    ): SizedBox();
   }
 
 }

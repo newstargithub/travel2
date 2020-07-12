@@ -10,6 +10,8 @@ import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/resource_mananger.dart';
 import 'package:roll_demo/util/route.dart';
 
+const double _kItemImageHeight = 80.0;
+
 class HistoryItem extends StatelessWidget {
 
   //数据模型
@@ -19,11 +21,14 @@ class HistoryItem extends StatelessWidget {
 
   bool showDateHeader;
 
+  double imageHeight;
+
   // 构造函数语法糖，用来给model赋值
   HistoryItem({
     this.bean,
     this.onTap,
-    this.showDateHeader
+    this.showDateHeader,
+    this.imageHeight = _kItemImageHeight,
   });
 
   @override
@@ -57,27 +62,27 @@ class HistoryItem extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                Expanded(
-                  child: Container(
-                  height: 80,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                    Expanded(
-                      child: Text(bean.envelopeText,
-                      style: TextStyles.textMiddle,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: Container(
+                      height: imageHeight,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                        Expanded(
+                          child: Text(bean.envelopeText,
+                          style: TextStyles.textMiddle,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        _buildSecondaryInfo(bean),
+                        ],
                       ),
                     ),
-                    _buildSecondaryInfo(bean),
-                    ],
                   ),
-                  ),
-                ),
-                Gaps.hGap5,
-                _buildEnvelopeImg(bean),
+                  Gaps.hGap5,
+                  _buildEnvelopeImg(bean),
                 ],
               ),
             ),
@@ -99,13 +104,13 @@ class HistoryItem extends StatelessWidget {
             ImageHelper.placeHolder(width: 180, height: 180),
         errorWidget: (context, url, error) =>
             ImageHelper.error(width: 180, height: 180),
-        width: 80,
-        height: 80,
+        width: imageHeight,
+        height: imageHeight,
         fit: BoxFit.fitWidth,
       ) : Image.file(
         File(envelopePic),
-        width: 80,
-        height: 80,
+        width: imageHeight,
+        height: imageHeight,
         fit: BoxFit.fitWidth,
       );
     }

@@ -66,6 +66,7 @@ class ThemeModel extends ChangeNotifier {
         // 主题颜色属于亮色系还是属于暗色系(eg:dark时,AppBarTitle文字及状态栏文字的颜色为白色,反之为黑色)
         primaryColorBrightness: Brightness.dark,
         accentColorBrightness: Brightness.dark,
+        // 页面的主题颜色
         primarySwatch: themeColor,
         accentColor: accentColor,
         fontFamily: fontValueList[_fontIndex]);

@@ -33,6 +33,7 @@ class Constant {
   static const String access_Token = 'accessToken';
   static const String refresh_Token = 'refreshToken';
   static const String save_image_show_border = 'key_save_image_show_border';
+  static const String save_image_show_author = 'key_save_image_show_author';
 
   //todo Amap IOSApiKey
   static const String map_api_key = "4327916279bf45a044bb53b947442387";

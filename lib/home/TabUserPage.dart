@@ -15,6 +15,8 @@ import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/image_util.dart';
 import 'package:roll_demo/util/route.dart';
 
+import 'drawer_content.dart';
+
 class TabUserPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -72,73 +74,7 @@ class _TabUserPageState extends State<TabUserPage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 UserHeaderWidget(),
-                ListTile(
-                  leading: Icon(Icons.favorite, color: Theme.of(context).accentColor),
-                  title: Text(
-                    S.of(context).favorite,
-                  ),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    //打开我的收藏页面
-                    NavigatorUtils.pushNamed(context, TAG_LIST_PAGE);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.mood, color: Theme.of(context).accentColor),
-                  title: Text(
-                    S.of(context).dark_model,
-                  ),
-                  trailing: CupertinoSwitch(
-                      value: model.themeModel.isDark,
-                      onChanged: (v) {
-                        debugPrint("onChanged:$v");
-                        model.themeModel.switchTheme(
-                            brightness: v ? Brightness.dark : Brightness.light);
-                      }),
-                  onTap: () {
-                    Provider.of<ThemeModel>(context).switchTheme(
-                        brightness:
-                            Theme.of(context).brightness == Brightness.light
-                                ? Brightness.dark
-                                : Brightness.light);
-                  },
-                ),
-                SettingThemeWidget(),
-                ListTile(
-                  leading: Icon(Icons.settings, color: Theme.of(context).accentColor),
-                  title: Text(
-                    S.of(context).tabSettings,
-                  ),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-                    pushNamed(context, SETTING_PAGE);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.lock, color: Theme.of(context).accentColor),
-                  title: Text(
-                    S.of(context).pattern_lock,
-                  ),
-                  trailing: CupertinoSwitch(
-                      value: hasPatter,
-                      onChanged: (v) {
-                        debugPrint("onChanged:$v");
-                        switchPattern();
-                      }),
-                  onTap: () {
-                    switchPattern();
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.account_box, color: Theme.of(context).accentColor),
-                  title: Text(
-                    S.of(context).about,
-                  ),
-                  trailing: Icon(Icons.chevron_right),
-                  onTap: () {
-
-                  },
-                ),
+                DrawerContent(),
               ],
             ),
           );

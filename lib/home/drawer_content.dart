@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:roll_demo/generated/i18n.dart';
+import 'package:roll_demo/model/LocaleModel.dart';
 import 'package:roll_demo/model/ThemeModel.dart';
 import 'package:roll_demo/ui/page/lock/PatternLockUtils.dart';
 import 'package:roll_demo/ui/page/lock/base_pattern_page.dart';
@@ -10,14 +11,14 @@ import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/route.dart';
 
 import 'TabUserPage.dart';
-
+/// 抽屉的初始内容
+///
+///
 class DrawerContent extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _DrawerContentState();
   }
-
 }
 
 class _DrawerContentState extends State<DrawerContent> {
@@ -57,6 +58,7 @@ class _DrawerContentState extends State<DrawerContent> {
   @override
   Widget build(BuildContext context) {
     ThemeModel themeModel = Provider.of(context);
+    final localModel = Provider.of<LocaleModel>(context);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -116,6 +118,21 @@ class _DrawerContentState extends State<DrawerContent> {
               }),
           onTap: () {
             switchPattern();
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.navigation, color: Theme.of(context).accentColor),
+          title: Text(
+            S.of(context).bottom_navigation,
+          ),
+          trailing: CupertinoSwitch(
+              value: localModel.showBottomNavigationBar,
+              onChanged: (v) {
+                debugPrint("onChanged:$v");
+                localModel.switchBottomNavigationBar();
+              }),
+          onTap: () {
+            localModel.switchBottomNavigationBar();
           },
         ),
         ListTile(

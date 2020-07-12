@@ -93,7 +93,7 @@ class _SearchBarState extends State<SearchBar> {
                       child: Container(
                         height: 32,
                         decoration: BoxDecoration(
-                          color: Colours.bg_gray,
+                          color: themeData.dialogBackgroundColor,
                           borderRadius: BorderRadius.circular(4.0),
                         ),
                         child: TextField(
@@ -104,7 +104,9 @@ class _SearchBarState extends State<SearchBar> {
                           //最大行数
                           maxLines: 1,
                           //解决hintText不居中与光标位置不一致
-                          style: TextStyle(textBaseline: TextBaseline.alphabetic),
+                          style: TextStyle(
+                            textBaseline: TextBaseline.alphabetic,
+                          ),
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.only(
                                 top: 6.0, left: -8.0, right: -16.0),

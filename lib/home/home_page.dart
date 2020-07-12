@@ -33,8 +33,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   var _pageController = PageController();
   var _selectedIndex = 0;
-  var _lastPressed;
 
+  /// 可以在此期间执行 State 各变量的初始赋值，
+  /// 同时也可以在此期间与服务端交互，获取服务端数据后调用 setState 来设置 State。
   @override
   void initState() {
     super.initState();
@@ -61,8 +62,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       // 一个完整的路由页可能会包含导航栏、抽屉菜单(Drawer)以及底部Tab导航菜单等。
       // Scaffold是一个路由页的骨架，我们使用它可以很容易地拼装出一个完整的页面。
       child:
-//        _buildBottomNavigateScaffold(),
-        _buildDrawerScaffold(context),
+        _buildDrawerScaffold(),
     );
   }
 
@@ -72,46 +72,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 //      appBar: AppBar(
 //      ),//导航栏
 //      drawer: MyDrawer(), //抽屉
-      body: PageView.builder(
-        itemBuilder: (ctx, index) => pages[index],
-        itemCount: pages.length,
-        controller: _pageController,
-        physics: NeverScrollableScrollPhysics(),
-        onPageChanged: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-      ),
+      body: _buildHomePageView(),
       // 底部导航
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text(S.of(context).tabHome),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.widgets),
-            title: Text(S.of(context).tabProject),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text(S.of(context).wechatAccount),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.backup),
-            title: Text(S.of(context).tabStructure),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            title: Text(S.of(context).tabSettings),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).accentColor,
-        onTap: (index) => _pageController.jumpToPage(index),
-      ),
+      bottomNavigationBar: _buildBottomNavigationBar(),
       /*floatingActionButton: FloatingActionButton(
               onPressed: _onAdd,
               child: Icon(Icons.add),
@@ -119,7 +82,56 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  _buildDrawerScaffold(BuildContext context) {
+  /// 底部导航栏
+  BottomNavigationBar _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      items: [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          title: Text(S.of(context).tabHome),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.widgets),
+          title: Text(S.of(context).tabProject),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.school),
+          title: Text(S.of(context).wechatAccount),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.backup),
+          title: Text(S.of(context).tabStructure),
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          title: Text(S.of(context).tabSettings),
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Theme.of(context).accentColor,
+      onTap: (index) => _pageController.jumpToPage(index),
+    );
+  }
+
+  PageView _buildHomePageView() {
+    return PageView.builder(
+      itemBuilder: (ctx, index) => pages[index],
+      itemCount: pages.length,
+      controller: _pageController,
+      physics: NeverScrollableScrollPhysics(),
+      onPageChanged: (index) {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+    );
+  }
+
+  /// 带侧边栏的页面框架
+  _buildDrawerScaffold() {
+    final localModel = Provider.of<LocaleModel>(context);
+    bool showBottomNavigationBar = localModel.showBottomNavigationBar;
     return Scaffold(
       //导航栏
       appBar: PreferredSize(
@@ -136,8 +148,21 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           preferredSize: Size.fromHeight(Dimens.app_bar_height)
       ),
       drawer: MyDrawer(), //抽屉
-      body: MainPage(),
+      body: showBottomNavigationBar? _buildHomePageView(): MainPage(),
+      bottomNavigationBar: showBottomNavigationBar? _buildBottomNavigationBar(): null,
     );
+  }
+
+  /// 永久移除组件，并释放组件资源。
+  @override
+  void dispose() {
+
+  }
+
+  /// 在组件被移除节点后会被调用
+  @override
+  void deactivate() {
+
   }
 
   /// 去搜索页面

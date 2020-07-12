@@ -90,5 +90,8 @@
   "hide_border": "隐藏边框",
   "show_border": "显示边框",
   "pattern_lock": "手势密码",
-  "pl_continue": "继续"
+  "pl_continue": "继续",
+  "bottom_navigation": "底部导航",
+  "show_author": "显示作者",
+  "hide_author": "隐藏作者"
 }

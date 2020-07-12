@@ -29,6 +29,7 @@ class S implements WidgetsLocalizations {
   String get app_title => "Crazy Flutter";
   String get autoBySystem => "跟随系统";
   String get body_content_is_empty => "正文内容不能为空";
+  String get bottom_navigation => "底部导航";
   String get cancel => "取消";
   String get center => "中";
   String get check_update => "检查更新";
@@ -48,6 +49,7 @@ class S implements WidgetsLocalizations {
   String get fontKuaiLe => "快乐字体";
   String get font_size => "字号";
   String get go_register => "go register";
+  String get hide_author => "隐藏作者";
   String get hide_border => "隐藏边框";
   String get icon => "头像";
   String get image => "图";
@@ -90,6 +92,7 @@ class S implements WidgetsLocalizations {
   String get saving => "正在保存";
   String get score => "评分";
   String get share => "分享";
+  String get show_author => "显示作者";
   String get show_border => "显示边框";
   String get slogan => "个性签名";
   String get slogan_edit => "更改签名";
@@ -142,6 +145,8 @@ class $zh extends S {
   @override
   String get update => "更新";
   @override
+  String get show_author => "显示作者";
+  @override
   String get login => "登录";
   @override
   String get tips => "提示";
@@ -172,7 +177,11 @@ class $zh extends S {
   @override
   String get hide_border => "隐藏边框";
   @override
+  String get hide_author => "隐藏作者";
+  @override
   String get rain => "雨";
+  @override
+  String get bottom_navigation => "底部导航";
   @override
   String get could_not_launch => "不支持打开链接：";
   @override
