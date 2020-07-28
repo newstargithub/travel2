@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -9,18 +6,12 @@ import 'package:roll_demo/bean/update_item_model.dart';
 import 'package:roll_demo/generated/i18n.dart';
 import 'package:roll_demo/model/diary_list_model.dart';
 import 'package:roll_demo/provider/ProviderWidget.dart';
-import 'package:roll_demo/res/dimens.dart';
 import 'package:roll_demo/res/styles.dart';
 import 'package:roll_demo/util/constant.dart';
-import 'package:roll_demo/util/image_util.dart';
-import 'package:roll_demo/util/resource_mananger.dart';
 import 'package:roll_demo/util/route.dart';
 import 'package:roll_demo/widget/ViewStateWidget.dart';
 import 'package:roll_demo/widget/WeatherFloatWidget.dart';
-import 'package:roll_demo/widget/app/diary_item.dart';
 import 'package:roll_demo/widget/app/diary_card.dart';
-
-import 'diary/diary_model.dart';
 
 class MainPage extends StatefulWidget {
   @override

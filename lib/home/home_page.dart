@@ -7,6 +7,7 @@ import 'package:roll_demo/common/FlutterCrashPlugin.dart';
 import 'package:roll_demo/demo/InfiniteGridView.dart';
 import 'package:roll_demo/demo/InfiniteListView.dart';
 import 'package:roll_demo/generated/i18n.dart';
+import 'package:roll_demo/model/LocaleModel.dart';
 import 'package:roll_demo/model/SettingModel.dart';
 import 'package:roll_demo/model/UserModel2.dart';
 import 'package:roll_demo/res/dimens.dart';

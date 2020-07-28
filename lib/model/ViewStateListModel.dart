@@ -22,6 +22,7 @@ class UnAuthorizedException implements Exception {
 
 // 定义需要共享的数据模型，通过混入 ChangeNotifier 管理听众
 // 我们在资源封装类中使用 mixin 混入了 ChangeNotifier
+// 使用了一个 Dart 的 with 关键词，这个用法是表示 ViewStateModel 可以直接调用 ChangeNotifier 的方法
 class ViewStateModel with ChangeNotifier {
   /// 防止页面销毁后,异步任务才完成,导致报错
   bool _disposed = false;
@@ -41,6 +42,7 @@ class ViewStateModel with ChangeNotifier {
   // 写方法
   set viewState(ViewState viewState) {
     this._viewState = viewState;
+    //通过 ChangeNotifier 通知监听方
     notifyListeners();
   }
 

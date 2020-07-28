@@ -41,7 +41,6 @@ class _WeatherFloatState extends State<WeatherFloatWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 64,
         child: ProviderWidget<WeatherModel>(
           model: WeatherModel(),
           onModelReady: (model) => model.initData(),
