@@ -15,7 +15,7 @@ import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/image_util.dart';
 import 'package:roll_demo/util/route.dart';
 
-import 'drawer_content.dart';
+import '../../home/drawer_content.dart';
 
 class TabUserPage extends StatefulWidget {
   @override
@@ -74,7 +74,7 @@ class _TabUserPageState extends State<TabUserPage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 UserHeaderWidget(),
-                DrawerContent(),
+                DrawerSetting(),
               ],
             ),
           );

@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:roll_demo/bean/Label.dart';
+import 'package:roll_demo/generated/i18n.dart';
 
 class CommonUtil {
   static bool isEmpty(String text) {
@@ -10,12 +11,13 @@ class CommonUtil {
     return list == null || list.isEmpty;
   }
 
-  static String formatDate(DateTime dateTime) {
+  static String formatDate(DateTime dateTime, {String pattern = "yyyy-MM-dd HH:mm:ss"}) {
     if(dateTime == null) {
       return null;
     }
-    return DateFormat("yyyy-MM-dd HH:mm:ss").format(dateTime);
+    return DateFormat(pattern).format(dateTime);
   }
+
 
   /// 是网络图片
   static bool isNetLink(String url) {

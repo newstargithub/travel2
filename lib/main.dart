@@ -15,7 +15,7 @@ import 'package:roll_demo/demo/FocusTest.dart';
 import 'package:roll_demo/provider/provider_manager.dart';
 import 'package:roll_demo/ui/page/diary/save_image_page.dart';
 import 'package:roll_demo/ui/page/home/splash_page.dart';
-import 'package:roll_demo/ui/page/label/LabelListPage.dart';
+import 'package:roll_demo/pages/label/LabelListPage.dart';
 import 'package:roll_demo/ui/page/lock/confirm_pattern_page.dart';
 import 'package:roll_demo/ui/page/lock/set_pattern_page.dart';
 import 'package:roll_demo/ui/page/search/search_diary.dart';
@@ -33,7 +33,7 @@ import 'demo/ConstrainedBox.dart';
 import 'generated/i18n.dart';
 import 'home/SettingPage.dart';
 import 'home/article_detail_page.dart';
-import 'home/home_page.dart';
+import 'pages/home/home_page.dart';
 import 'model/LocaleModel.dart';
 import 'model/ThemeModel.dart';
 import 'net/storage_manager.dart';
@@ -158,7 +158,7 @@ class MyApp extends StatelessWidget {
     debugPrint("generateRoute settings:$settings");
     switch (settings.name) {
       case HOME_PAGE:
-        return CupertinoPageRoute(builder: (_) => Home());
+        return CupertinoPageRoute(builder: (_) => HomePageIndex());
       case SETTING_PAGE:
         return CupertinoPageRoute(builder: (_) => SettingPage());
       case LOGIN_PAGE:

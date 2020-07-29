@@ -165,7 +165,7 @@ abstract class ViewStateListModel<T> extends ViewStateModel {
     await refresh(init: true);
   }
 
-  //下拉刷新
+  /// 下拉刷新
   refresh({bool init = false}) async {
     try {
       List<T> data = await loadData();
@@ -173,12 +173,8 @@ abstract class ViewStateListModel<T> extends ViewStateModel {
         setEmpty();
       } else {
         list = data;
-        if(init) {
-          //改变页面状态为非加载中
-          setBusy(false);
-        } else {
-          notifyListeners();
-        }
+        setBusy(false);
+        notifyListeners();
       }
     } catch (e, s) {
       handleCatch(e, s);

@@ -10,18 +10,22 @@ import 'package:roll_demo/ui/page/lock/base_pattern_page.dart';
 import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/route.dart';
 
-import 'TabUserPage.dart';
+import '../pages/user/TabUserPage.dart';
 /// 抽屉的初始内容
 ///
 ///
-class DrawerContent extends StatefulWidget {
+class DrawerSetting extends StatefulWidget {
+  final bool isDraw;
+
+  const DrawerSetting({Key key, this.isDraw = false}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
-    return _DrawerContentState();
+    return _DrawerSettingState();
   }
 }
 
-class _DrawerContentState extends State<DrawerContent> {
+class _DrawerSettingState extends State<DrawerSetting> {
 
   bool hasPatter = false;
 
@@ -64,18 +68,21 @@ class _DrawerContentState extends State<DrawerContent> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.favorite, color: Theme.of(context).accentColor),
+          leading: Icon(Icons.local_offer, color: Theme.of(context).accentColor),
           title: Text(
-            S.of(context).favorite,
+            S.of(context).label,
           ),
           trailing: Icon(Icons.chevron_right),
           onTap: () {
+            if(widget.isDraw) {
+              NavigatorUtils.goBack(context);
+            }
             //打开我的收藏页面
             NavigatorUtils.pushNamed(context, TAG_LIST_PAGE);
           },
         ),
         ListTile(
-          leading: Icon(Icons.mood, color: Theme.of(context).accentColor),
+          leading: Icon(Icons.highlight, color: Theme.of(context).accentColor),
           title: Text(
             S.of(context).dark_model,
           ),
@@ -102,6 +109,9 @@ class _DrawerContentState extends State<DrawerContent> {
           ),
           trailing: Icon(Icons.chevron_right),
           onTap: () {
+            if(widget.isDraw) {
+              NavigatorUtils.goBack(context);
+            }
             pushNamed(context, SETTING_PAGE);
           },
         ),
@@ -142,7 +152,9 @@ class _DrawerContentState extends State<DrawerContent> {
           ),
           trailing: Icon(Icons.chevron_right),
           onTap: () {
-
+            if(widget.isDraw) {
+              NavigatorUtils.goBack(context);
+            }
           },
         ),
       ],

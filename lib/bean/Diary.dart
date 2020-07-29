@@ -94,8 +94,19 @@ class Diary {
     return "";
   }
 
-  // 图片(一张还是几张)
-
+  // 所有图片
+  get imageUrls {
+    List<String> list = [];
+    if(richTextData == null) {
+      return "";
+    }
+    for(CustomTypeList item in richTextData.list) {
+      if(item.isImage) {
+        list.add(item.data);
+      }
+    }
+    return list;
+  }
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -140,5 +151,11 @@ class Diary {
     return 'Diary{id: $id, isDelete: $isDelete, content: $content, dateTime: $dateTime, createTime: $createTime, updateTime: $updateTime, weather: $weather, location: $location, account: $account, labelList: $labelList}';
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Diary && runtimeType == other.runtimeType && id == other.id;
 
+  @override
+  int get hashCode => id.hashCode;
 }

@@ -8,10 +8,12 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
   static const int pageNumFirst = 0;
 
   /// 分页条目数量
-  static const int pageSize = 20;
+  static const int sPageSize = 20;
 
   /// 当前页码
   int _curPageNum = pageNumFirst;
+  /// 一页数量
+  int pageSize = sPageSize;
 
   /// 没有更多数据
   bool noMoreData = true;
@@ -26,13 +28,13 @@ abstract class ViewStateRefreshListModel<T> extends ViewStateListModel<T> {
     try {
       _curPageNum = pageNumFirst;
       var data = await loadData(pageNum: _curPageNum);
+      refreshCompleted();
       if (data.isEmpty) {
         noMoreData = true;
         setEmpty();
       } else {
         list.clear();
         list.addAll(data);
-        refreshCompleted();
         noMoreData = data.length < pageSize;
         if (noMoreData) {
           loadNoData();

@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:roll_demo/bean/Label.dart';
 import 'package:roll_demo/generated/i18n.dart';
 import 'package:roll_demo/model/LocaleModel.dart';
-import 'package:roll_demo/model/LabelListModel.dart';
+import 'package:roll_demo/pages/label/LabelListModel.dart';
 import 'package:roll_demo/provider/ProviderWidget.dart';
-import 'package:roll_demo/ui/page/label/InputTextDialog.dart';
+import 'package:roll_demo/pages/label/InputTextDialog.dart';
 import 'package:roll_demo/util/conmon_util.dart';
 import 'package:roll_demo/util/image_util.dart';
 import 'package:roll_demo/widget/ViewStateWidget.dart';
@@ -19,8 +19,6 @@ class LabelListPage extends StatefulWidget {
 }
 
 class _LabelListPageState extends State<LabelListPage> {
-
-  List<Label> list;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +108,7 @@ class _LabelListPageState extends State<LabelListPage> {
   }
 
   _buildLabelCategory(LabelListModel model) {
-    list = model.list;
+    List<Label> list = model.list;
     debugPrint("_onPressedDeleteItem:" + model.toString() + " isEdit" + model.isEdit.toString());
     return SingleChildScrollView(
       scrollDirection: Axis.vertical, //滚动方向，默认是垂直方向,

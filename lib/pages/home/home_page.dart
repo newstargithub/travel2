@@ -11,27 +11,29 @@ import 'package:roll_demo/model/LocaleModel.dart';
 import 'package:roll_demo/model/SettingModel.dart';
 import 'package:roll_demo/model/UserModel2.dart';
 import 'package:roll_demo/res/dimens.dart';
-import 'package:roll_demo/ui/page/label/LabelListPage.dart';
+import 'package:roll_demo/pages/label/LabelListPage.dart';
 import 'package:roll_demo/ui/page/lock/set_pattern_page.dart';
-import 'package:roll_demo/ui/page/main_page.dart';
+import 'package:roll_demo/pages/home/main_page.dart';
 import 'package:roll_demo/ui/page/diary/rich_text_edit.dart';
+import 'package:roll_demo/ui/page/net_pictures_page.dart';
 import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/route.dart';
 import 'package:roll_demo/util/util.dart';
 import 'package:roll_demo/widget/quit_will_pop_scope.dart';
 
-import 'TabUserPage.dart';
-import 'TabWxArticleWidget.dart';
-import 'drawer_content.dart';
+import '../user/TabUserPage.dart';
+import '../../home/TabWxArticleWidget.dart';
+import '../../home/drawer_content.dart';
+import 'main_page_drawer.dart';
 
-class Home extends StatefulWidget {
+class HomePageIndex extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _HomeState();
+    return _HomePageIndexState();
   }
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+class _HomePageIndexState extends State<HomePageIndex> with SingleTickerProviderStateMixin {
   var _pageController = PageController();
   var _selectedIndex = 0;
 
@@ -53,7 +55,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     MainPage(),
     SetPatternPage(),
     TabWxArticleWidget(),
-    LabelListPage(),
+    NetPicturesPage(),
     TabUserPage(),
   ];
 
@@ -62,8 +64,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     return QuitWillPopScope(
       // 一个完整的路由页可能会包含导航栏、抽屉菜单(Drawer)以及底部Tab导航菜单等。
       // Scaffold是一个路由页的骨架，我们使用它可以很容易地拼装出一个完整的页面。
-      child:
-        _buildDrawerScaffold(),
+      child: _buildDrawerScaffold(),
     );
   }
 
@@ -134,7 +135,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     final localModel = Provider.of<LocaleModel>(context);
     bool showBottomNavigationBar = localModel.showBottomNavigationBar;
     return Scaffold(
-      //导航栏
+      /*//导航栏
       appBar: PreferredSize(
           child: AppBar(
             actions: <Widget>[
@@ -148,7 +149,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           ),
           preferredSize: Size.fromHeight(Dimens.app_bar_height)
       ),
-      drawer: MyDrawer(), //抽屉
+      drawer: MainPageDrawer(), //抽屉*/
       body: showBottomNavigationBar? _buildHomePageView(): MainPage(),
       bottomNavigationBar: showBottomNavigationBar? _buildBottomNavigationBar(): null,
     );
@@ -184,122 +185,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 //    var dateTime = await showDatePicker(context: context, initialDate: dateNow,
 //        firstDate: dateNow, lastDate: dateNow);
   }
-
 }
 
-class TabHomeWidget extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return TabHomeState();
-  }
-}
 
-class TabHomeState extends State<TabHomeWidget>
-    with SingleTickerProviderStateMixin {
-  List tabs = ["新闻", "历史", "图片"];
-  TabController _tabController;
-  var _selectIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    // 创建Controller
-    _tabController = TabController(length: tabs.length, vsync: this);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TabBarView(
-      children: tabs.map((e) {
-        // 创建3个Tab页内容
-        if (e == "新闻") {
-          return InfiniteListView();
-        } else if (e == "历史") {
-          return InfiniteGridView();
-        }
-        return Container(
-          alignment: Alignment.center,
-          child: Text(
-            e,
-            textScaleFactor: 5,
-          ),
-        );
-      }).toList(),
-      // TabBar和TabBarView的controller是同一个！
-      controller: _tabController,
-    );
-  }
-
-  _onTopItem(int index) {
-    setState(() {
-      _selectIndex = index;
-    });
-  }
-}
-
-/// 抽屉栏
-class MyDrawer extends Drawer {
-  const MyDrawer({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    UserModel userModel = Provider.of<UserModel>(context);
-    return Drawer(
-      child: Column(
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(userModel.hasUser ? userModel.user.username: S.of(context).click_go_login),
-            accountEmail: userModel.hasUser ? Text(userModel.user.email) : SizedBox(),
-            currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage(Utils.getImgPath("user_avatar")),
-            ),
-            margin: EdgeInsets.zero,
-            onDetailsPressed: () {
-              _onDetailPressed(context);
-            },
-          ),
-          MediaQuery.removePadding(
-            context: context,
-            // DrawerHeader consumes top MediaQuery padding.
-            removeTop: true,
-            child: Expanded(
-              child: ListView(
-                dragStartBehavior: DragStartBehavior.down,
-                padding: const EdgeInsets.only(top: 8.0),
-                children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      // The initial contents of the drawer.抽屉的初始内容。
-                      DrawerContent()
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showNotImplementedMessage() {
-
-  }
-
-  /// 去设置页面
-  void _goSetting(BuildContext context) {
-    NavigatorUtils.pushNamed(context, SETTING_PAGE);
-  }
-
-  /// 用户详情主页或去登录
-  void _onDetailPressed(BuildContext context) {
-    UserModel userModel = Provider.of<UserModel>(context);
-    userModel.hasUser ? NavigatorUtils.pushNamed(context, PERSONAL_AUDIT_PAGE)
-        : NavigatorUtils.pushNamed(context, LOGIN_PAGE);
-  }
-}
 
 class NavigationBar extends StatefulWidget {
   @override

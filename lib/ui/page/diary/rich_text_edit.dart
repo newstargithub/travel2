@@ -13,6 +13,7 @@ import 'package:roll_demo/generated/i18n.dart';
 import 'package:roll_demo/provider/ProviderWidget.dart';
 import 'package:roll_demo/res/resources.dart';
 import 'package:roll_demo/ui/page/diary/item_text.dart';
+import 'package:roll_demo/ui/page/image_page.dart';
 import 'package:roll_demo/util/conmon_util.dart';
 import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/date_util.dart';
@@ -150,8 +151,10 @@ class _RichTextEditPageState extends State<RichTextEditPage>
   @override
   bool get wantKeepAlive => true;
 
-  Widget _buildImageItem(DiaryModel model, int position, CustomTypeList item) {
-    return ItemImage(item, isEdit: model.isEdit, onPressed: () {
+  Widget _buildImageItem(DiaryModel model, int position, CustomTypeList customType) {
+    return ItemImage(customType, isEdit: model.isEdit, onPressed: (){
+      _goImageDetail(context, model.item, customType);
+    }, onDeletePressed: () {
       model.textList.remove(position);
       setState(() {
 
@@ -348,6 +351,19 @@ class _RichTextEditPageState extends State<RichTextEditPage>
         _swapEditModel(context);
       },
     );
+  }
+
+  /// 查看大图
+  void _goImageDetail(BuildContext context, Diary bean, CustomTypeList customType) {
+    List<String> urls = bean.imageUrls;
+    int index = urls.indexOf(customType.data);
+    Navigator.of(context).push(new CupertinoPageRoute(builder: (ctx) {
+      return ImagePage(
+        imageUrls: urls,
+        initialPageIndex: index,
+        onSelect: (current) {},
+      );
+    }));
   }
 }
 

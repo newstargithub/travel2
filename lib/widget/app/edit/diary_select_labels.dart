@@ -7,7 +7,7 @@ import 'package:roll_demo/bean/Label.dart';
 import 'package:roll_demo/generated/i18n.dart';
 import 'package:roll_demo/provider/ProviderWidget.dart';
 import 'package:roll_demo/ui/page/diary/diary_model.dart';
-import 'package:roll_demo/ui/page/label/LabelSelectModel.dart';
+import 'package:roll_demo/pages/label/LabelSelectModel.dart';
 import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/route.dart';
 import 'package:roll_demo/widget/common/load_view.dart';

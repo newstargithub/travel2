@@ -174,6 +174,27 @@ class DBProvider {
     return beans;
   }
 
+  /// 分页查询任务
+  /// select * from Diary where account = default order by columnDateTime asc limit 1 to 20
+  /// @param limit 查询条数
+  /// @param offset 起始位置
+  Future<List<Diary>> getTasks({String account, int limit = 20, int offset = 0}) async {
+    final db = await database;
+    final theAccount =
+        await SpUtil.getString(Keys.account) ?? "default";
+    String orderBy = columnDateTime + " DESC";
+    var list = await db.query(TABLE_DIARY,
+        where: "account = ?" ,
+        whereArgs: [account ?? theAccount],
+      orderBy: orderBy,
+      limit: limit,
+      offset: offset
+    );
+    List<Diary> beans = [];
+    beans.addAll(Diary.fromMapList(list));
+    return beans;
+  }
+
   /// 查询所有任务
   Future<List<Diary>> getHistoryTasks({String account}) async {
     final db = await database;

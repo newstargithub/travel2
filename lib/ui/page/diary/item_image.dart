@@ -11,8 +11,12 @@ class ItemImage extends StatelessWidget {
   final CustomTypeList item;
   final bool isEdit;
   final VoidCallback onPressed;
+  final VoidCallback onDeletePressed;
 
-  ItemImage(this.item, {this.isEdit, this.onPressed});
+  ItemImage(this.item, {this.isEdit,
+    this.onPressed,
+    this.onDeletePressed
+  });
 
   /// 对齐方式
   AlignmentGeometry _getAlign(CustomTypeList item) {
@@ -33,7 +37,10 @@ class ItemImage extends StatelessWidget {
       children: <Widget>[
         Container(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: _buildImage()
+            child: InkWell(
+              child: _buildImage(),
+              onTap: onPressed,
+            )
         ),
         _buildDeleteButton(),
       ],
@@ -69,7 +76,7 @@ class ItemImage extends StatelessWidget {
             iconSize: 24.0,
             padding: const EdgeInsets.all(0.0),
             color: Colors.red,
-            onPressed: onPressed
+            onPressed: onDeletePressed
         ),
       ),
     ) : SizedBox();

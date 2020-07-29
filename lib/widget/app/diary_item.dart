@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:roll_demo/bean/Diary.dart';
 import 'package:roll_demo/res/dimens.dart';
 import 'package:roll_demo/res/styles.dart';
-import 'package:roll_demo/ui/page/main_page.dart';
+import 'package:roll_demo/pages/home/main_page.dart';
 import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/image_util.dart';
 import 'package:roll_demo/util/resource_mananger.dart';

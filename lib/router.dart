@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:roll_demo/pages/common/web_view_page.dart';
+import 'package:roll_demo/pages/home/home_page.dart';
+import 'package:roll_demo/pages/user/TabUserPage.dart';
+import 'package:roll_demo/pages/user/index.dart';
 
 /// Scheme 是一种 APP 内跳转协议，通过 Scheme 协议在 APP 内实现一些页面的互相跳转。一般可以使用以下格式协议。
 /// [scheme]://[host]/[path]?[query]
 ///
 
 class Router {
-  Pattern appScheme;
+  Pattern appScheme = "tyfapp";
 
   /// 注册路由事件
   Map<String, Widget Function(BuildContext)> registerRouter() {
@@ -92,5 +95,9 @@ class Router {
       }
     }
     return null;
+  }
+
+  Widget _buildPage(Widget pageWidget) {
+
   }
 }
