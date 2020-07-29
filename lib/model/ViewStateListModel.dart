@@ -153,7 +153,6 @@ abstract class ViewStateLoadModel<T> extends ViewStateModel {
   Future<T> loadData();
 }
 
-
 /// 列表加载Model
 abstract class ViewStateListModel<T> extends ViewStateModel {
   /// 列表数据
