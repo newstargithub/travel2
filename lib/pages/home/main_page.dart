@@ -275,6 +275,7 @@ class _MainPageState extends State<MainPage>
                 firstVisibleIndex = first;
               });
             }
+
           }
       ),
       controller: _controller,
@@ -404,6 +405,7 @@ class MyChildrenDelegate extends SliverChildBuilderDelegate {
     print(
         'firstIndex: $firstIndex, lastIndex: $lastIndex, leadingScrollOffset: $leadingScrollOffset,'
             'trailingScrollOffset: $trailingScrollOffset  ');
+    visibleIndex(firstIndex, lastIndex);
     return super.estimateMaxScrollOffset(
         firstIndex, lastIndex, leadingScrollOffset, trailingScrollOffset);
   }
