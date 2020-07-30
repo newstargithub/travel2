@@ -124,9 +124,13 @@ class _SearchDiaryState extends State<SearchDiaryPage> {
 //              ListTile(title:Text("列表头")),
         Expanded(
           child: ListView.separated(
+            // 滑动方向，垂直
+            scrollDirection: Axis.vertical,
+            // 设置分割内容
             separatorBuilder: (BuildContext context, int index){
               return divider;
             },
+            // 设置列表内容
             itemBuilder: (BuildContext context, int index) {
               var item = list[index];
               var showDateHeader;
@@ -141,9 +145,14 @@ class _SearchDiaryState extends State<SearchDiaryPage> {
                 showDateHeader: showDateHeader,
               );
             },
+            // 控制滚动和监听滚动事件变化
             controller: _controller,
-//                  itemExtent: 50.0, //列表项高度固定时，显式指定高度是一个好习惯(性能消耗小)
+            // 列表项高度固定时，显式指定高度是一个好习惯(性能消耗小)
+//            itemExtent: 50.0,
+            // 总数量
             itemCount: list.length,
+            // item高度适配
+            shrinkWrap: true,
           ),
         ),
       ]);

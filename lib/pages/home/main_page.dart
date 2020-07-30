@@ -80,7 +80,7 @@ class _MainPageState extends State<MainPage>
         onModelReady: (DiaryListModel model) => model.initData(),
         builder: (context, DiaryListModel model, child) {
           return Scaffold(
-            //导航栏
+            // 应用栏，显示在顶部，包括其中的搜索框
             appBar: PreferredSize(
                 child: AppBar(
                   actions: <Widget>[
@@ -93,7 +93,9 @@ class _MainPageState extends State<MainPage>
                   centerTitle: true,
                 ),
                 preferredSize: Size.fromHeight(Dimens.app_bar_height)),
-            drawer: MainPageDrawer(), //抽屉
+            // 左侧导航栏
+            drawer: MainPageDrawer(),
+            // 页面的主题显示内容
             body: Stack(
               children: <Widget>[
                 SmartRefresher(
@@ -133,6 +135,7 @@ class _MainPageState extends State<MainPage>
                 ),
               ],
             ),
+            // 设置显示在上层区域的按钮，默认位置位于右下角
             floatingActionButton: !showToTopBtn ? null : FloatingActionButton(
                 child: Icon(Icons.arrow_upward),
                 onPressed: () {
@@ -248,12 +251,14 @@ class _MainPageState extends State<MainPage>
       return ViewStateLoadingWidget();
     } else if (model.error) {
       return ViewStateWidget(
-          message: model.errorMessage, onPressed: model.initData);
+          message: model.errorMessage,
+          onPressed: model.initData
+      );
     } else if (model.empty) {
       return ViewStateWidget(
-          message: S
-              .of(context)
-              .empty, onPressed: model.initData);
+          message: S.of(context).empty,
+          onPressed: model.initData
+      );
     }
     var items = model.list;
     //如果需要自定义列表项生成模型，可以通过ListView.custom来自定义，它需要实现一个SliverChildDelegate用来给ListView生成列表项组件
@@ -275,7 +280,6 @@ class _MainPageState extends State<MainPage>
                 firstVisibleIndex = first;
               });
             }
-
           }
       ),
       controller: _controller,

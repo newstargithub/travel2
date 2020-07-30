@@ -88,6 +88,8 @@ class _HomePageIndexState extends State<HomePageIndex> with SingleTickerProvider
   BottomNavigationBar _buildBottomNavigationBar() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
+      // 数组，对应于BottomNavigationBarItem这个组件为菜单栏的每一项，
+      // 其中包含四个属性icon、title、activeIcon和backgroundColor
       items: [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
@@ -110,8 +112,13 @@ class _HomePageIndexState extends State<HomePageIndex> with SingleTickerProvider
           title: Text(S.of(context).tabSettings),
         ),
       ],
+      // 当前所在的 items 数组中的位置
       currentIndex: _selectedIndex,
+      // 代表选中的颜色，不能和selectedItemColor一起使用
       selectedItemColor: Theme.of(context).accentColor,
+      // 选中的字体大小
+      selectedFontSize: 12,
+      // 点击触发逻辑，一般用来触发页面的跳转更新
       onTap: (index) => _pageController.jumpToPage(index),
     );
   }

@@ -114,6 +114,12 @@ class TextStyles {
     fontSize: Dimens.font_sp16,
     color: Colours.text_red,
   );
+
+  static commonStyle() {
+    return TextStyle(
+      fontSize: Dimens.font_sp16,
+    );
+  }
 }
 
 /// 间隔

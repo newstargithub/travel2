@@ -110,6 +110,7 @@ class _DrawerSettingState extends State<DrawerSetting> {
           trailing: Icon(Icons.chevron_right),
           onTap: () {
             if(widget.isDraw) {
+              // 使用 Navigator.pop(context) 来关闭左侧导航栏。
               NavigatorUtils.goBack(context);
             }
             pushNamed(context, SETTING_PAGE);

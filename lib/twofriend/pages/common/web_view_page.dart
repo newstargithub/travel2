@@ -4,7 +4,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 /// web_view_page.dart 使用第三方库，在遇到 http 或者 https 的协议时，使用该页面去打开
 
 class CommonWebViewPage extends StatelessWidget {
-
+  /// url 地址
   final String url;
 
   /// 构造函数
