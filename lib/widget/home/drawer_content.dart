@@ -10,7 +10,7 @@ import 'package:roll_demo/ui/page/lock/base_pattern_page.dart';
 import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/route.dart';
 
-import '../pages/user/TabUserPage.dart';
+import '../../pages/user/TabUserPage.dart';
 /// 抽屉的初始内容
 ///
 ///

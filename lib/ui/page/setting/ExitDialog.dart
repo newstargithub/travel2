@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:roll_demo/generated/i18n.dart';
 import 'package:roll_demo/res/resources.dart';
-import 'package:roll_demo/widget/base_dialog.dart';
+import 'package:roll_demo/widget/dialog/base_dialog.dart';
 /// 退出登录弹窗
 /*
  showDialog(

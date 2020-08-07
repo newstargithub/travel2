@@ -8,7 +8,7 @@ import 'package:roll_demo/model/WechatAccountModel.dart';
 import 'package:roll_demo/provider/ProviderWidget.dart';
 import 'package:roll_demo/widget/ViewStateWidget.dart';
 
-import 'ArticleListItem.dart';
+import '../../widget/wan/ArticleListItem.dart';
 
 class TabWxArticleWidget extends StatefulWidget {
   @override

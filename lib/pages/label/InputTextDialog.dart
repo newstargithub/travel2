@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:roll_demo/res/dimens.dart';
 import 'package:roll_demo/res/styles.dart';
 import 'package:roll_demo/util/route.dart';
-import 'package:roll_demo/widget/base_dialog.dart';
+import 'package:roll_demo/widget/dialog/base_dialog.dart';
 /// 输入文本
 class InputTextDialog extends StatefulWidget {
   String title;

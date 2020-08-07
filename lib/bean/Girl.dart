@@ -1,9 +1,13 @@
 class Girl {
-
+  /// 图片地址
   String url;
+  /// 宽
   int width;
+  /// 高
   int height;
+  /// 详情页链接
   String link;
+  /// 伪造 refer 破解防盗链
   String refer;
 
   Girl({this.url, this.width, this.height});

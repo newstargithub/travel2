@@ -15,7 +15,7 @@ import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/image_util.dart';
 import 'package:roll_demo/util/route.dart';
 
-import '../../home/drawer_content.dart';
+import '../../widget/home/drawer_content.dart';
 
 class TabUserPage extends StatefulWidget {
   @override

@@ -32,6 +32,7 @@ class NetPicturesPage extends StatelessWidget {
 class PictureTab {
   String name;
   String path;
+
   PictureTab({this.name, this.path});
 }
 
@@ -122,8 +123,10 @@ class _MeituListState extends State<MeituList>
       onModelReady: (model) => model.initData(),
       builder: (context, MeituListModel model, child) {
         if (model.loading) {
+          /// 加载中
           return ViewStateLoadingWidget();
         } else if (model.error) {
+          /// 加载出错
           return ViewStateWidget(
               message: model.errorMessage, onPressed: model.initData);
         }
@@ -163,6 +166,7 @@ class _MeituListState extends State<MeituList>
                         imageUrl: bean.url,
                         fit: BoxFit.cover,
                         httpHeaders: {"Referer": bean.refer},
+                        /// 展位图
                         placeholder: (context, url) => new Container(
                           alignment: Alignment.center,
                           child: CircularProgressIndicator(
@@ -170,6 +174,7 @@ class _MeituListState extends State<MeituList>
                                 Theme.of(context).primaryColor),
                           ),
                         ),
+                        /// 加载出错
                         errorWidget: (context, url, error) => new Icon(
                           Icons.error,
                           color: Colors.redAccent,
@@ -186,5 +191,4 @@ class _MeituListState extends State<MeituList>
 
   @override
   bool get wantKeepAlive => true;
-
 }

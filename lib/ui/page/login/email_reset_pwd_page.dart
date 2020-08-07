@@ -4,7 +4,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:roll_demo/generated/i18n.dart';
 import 'package:roll_demo/provider/ProviderWidget.dart';
 import 'package:roll_demo/util/route.dart';
-import 'package:roll_demo/widget/base_dialog.dart';
+import 'package:roll_demo/widget/dialog/base_dialog.dart';
 
 import 'ResetPwdModel.dart';
 import 'login_page.dart';

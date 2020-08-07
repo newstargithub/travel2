@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -12,7 +11,7 @@ class GirlRepository {
   static String BASE_URL = "https://www.mzitu.com/";
 
   static Future<List<Girl>> fetchData(String path, int pageNum) async {
-    Dio shttp = HttpBuilder().baseUrl(BASE_URL).converter((data){
+    Dio shttp = HttpBuilder().baseUrl(BASE_URL).converter((data) {
       /*// Create a client transformer
       final Xml2Json myTransformer = Xml2Json();
       // Parse a simple XML string
@@ -31,7 +30,8 @@ class GirlRepository {
       Element total = document.querySelectorAll("div.postlist")[0];
       List<Element> items = total.querySelectorAll("li");
       for (Element element in items) {
-        String url = element.querySelectorAll("img")[0].attributes["data-original"];
+        String url =
+            element.querySelectorAll("img")[0].attributes["data-original"];
         Girl girl = new Girl(url: url);
         girl.link = element.querySelectorAll("a[href]")[0].attributes["href"];
         girl.refer = fakeRefer;

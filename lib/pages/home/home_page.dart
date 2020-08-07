@@ -15,15 +15,15 @@ import 'package:roll_demo/pages/label/LabelListPage.dart';
 import 'package:roll_demo/ui/page/lock/set_pattern_page.dart';
 import 'package:roll_demo/pages/home/main_page.dart';
 import 'package:roll_demo/ui/page/diary/rich_text_edit.dart';
-import 'package:roll_demo/ui/page/net_pictures_page.dart';
+import 'package:roll_demo/pages/meizi/net_pictures_page.dart';
 import 'package:roll_demo/util/constant.dart';
 import 'package:roll_demo/util/route.dart';
 import 'package:roll_demo/util/util.dart';
 import 'package:roll_demo/widget/quit_will_pop_scope.dart';
 
 import '../user/TabUserPage.dart';
-import '../../home/TabWxArticleWidget.dart';
-import '../../home/drawer_content.dart';
+import '../wan/TabWxArticleWidget.dart';
+import '../../widget/home/drawer_content.dart';
 import 'main_page_drawer.dart';
 
 class HomePageIndex extends StatefulWidget {

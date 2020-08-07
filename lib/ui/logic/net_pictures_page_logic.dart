@@ -4,6 +4,7 @@ import 'package:roll_demo/bean/Girl.dart';
 import 'package:roll_demo/model/MeituListModel.dart';
 import 'package:roll_demo/ui/page/image_page.dart';
 
+/// 处理页面逻辑
 class NetPicturesPageLogic {
   final MeituListModel _model;
 

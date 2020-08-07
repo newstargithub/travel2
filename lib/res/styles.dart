@@ -115,10 +115,18 @@ class TextStyles {
     color: Colours.text_red,
   );
 
-  static commonStyle() {
+  /// 默认字体大小
+  static double baseFontSize = 16.0;
+
+  /// 主页内容的bottom bar下的样式
+  static TextStyle commonStyle(
+      [double multipleFontSize = 1, Color myColor = Colors.lightBlueAccent]) {
     return TextStyle(
-      fontSize: Dimens.font_sp16,
-    );
+        color: myColor,
+        fontSize: baseFontSize * multipleFontSize,
+        letterSpacing: 1,
+        wordSpacing: 2,
+        height: 1.2);
   }
 }
 
