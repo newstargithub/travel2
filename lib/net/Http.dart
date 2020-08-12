@@ -13,9 +13,10 @@ import 'HeaderInterceptor.dart';
 
 final Http http = Http();
 
-class Http extends Dio {
+class Http  {
 
   static Http instance;
+  var dio;
 
   factory Http() {
     if (instance == null) {
@@ -28,15 +29,16 @@ class Http extends Dio {
 
   /// 初始化 加入app通用处理
   void _init() {
-    (transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
-    interceptors
+    dio = Dio();
+    (dio.transformer as DefaultTransformer).jsonDecodeCallback = parseJson;
+    dio.interceptors
     // 基础设置
       ..add(HeaderInterceptor())
     // JSON处理
-      ..add(RespInterceptor())
+      ..add(RespInterceptor());
     // cookie持久化 异步
-      ..add(CookieManager(
-          PersistCookieJar(dir: StorageManager.temporaryDirectory.path)));
+//      ..add(CookieManager(
+//          PersistCookieJar(dir: StorageManager.temporaryDirectory.path)));
   }
 }
 
@@ -49,11 +51,12 @@ parseJson(String text) {
   return compute(_parseAndDecode, text);
 }
 
+/// 响应拦截器
 class RespInterceptor extends Interceptor {
   static const baseUrl = 'https://www.wanandroid.com/';
 
   @override
-  onRequest(RequestOptions options) {
+  Future onRequest(RequestOptions options) {
     options.baseUrl = baseUrl;
     debugPrint("\n================== 请求数据 ==========================");
     debugPrint("url = ${options.uri.toString()}");
@@ -62,7 +65,7 @@ class RespInterceptor extends Interceptor {
 //    debugPrint('---api-request--->url--> ${options.baseUrl}${options.path}' +
 //        ' queryParameters: ${options.queryParameters}');
 //    debugPrint('---api-request--->data--->${options.data}');
-    return options;
+    return super.onRequest(options);
   }
 
   @override
@@ -70,51 +73,65 @@ class RespInterceptor extends Interceptor {
     debugPrint("\n================== 响应数据 ==========================");
     debugPrint("code = ${response.statusCode}");
     debugPrint("data = ${response.data}");
-    if(response.statusCode != 200) {
-      /// 非200会在http的onError()中
+    ResponseData respData = ResponseData.fromJson(response.data);
+    if (respData.success) {
+      response.data = respData.data;
+      return http.dio.resolve(response);
     } else {
-      if (response.data is Map) {
-        debugPrint('---api-response--->resp----->${response.data}');
-        RespData respData = RespData.fromJson(response.data);
-        if (respData.success) {
-          response.data = respData.data;
-          return http.resolve(response);
-        } else {
-          return handleFailed(respData);
-        }
+      if (respData.code == -1001) {
+        // 如果cookie过期,需要清除本地存储的登录信息
+        // StorageManager.localStorage.deleteItem(UserModel.keyUser);
+        throw const UnAuthorizedException(); // 需要登录
       } else {
-        /// WanAndroid API 如果报错,返回的数据类型存在问题
-        /// eg: 没有登录的返回的值为'{"errorCode":-1001,"errorMsg":"请先登录！"}'
-        /// 虽然是json样式,但是[response.headers.contentType?.mimeType]的值为'text/html'
-        /// 导致dio没有解析为json对象.两种解决方案:
-        /// 1.在post/get方法前加入泛型(Map),让其强制转换
-        /// 2.在这里统一处理再次解析
-        debugPrint('---api-response--->error--not--map---->$response');
-        RespData respData = RespData.fromJson(json.decode(response.data));
         return handleFailed(respData);
       }
     }
   }
 
-  @override
-  FutureOr<dynamic> onError(DioError e) {
+  Future onError(DioError err) {
     debugPrint("\n================== 错误响应数据 ======================");
-    debugPrint("type = ${e.type}");
-    debugPrint("message = ${e.message}");
-    debugPrint("stackTrace = ${e.stackTrace}");
+    debugPrint("type = ${err.type}");
+    debugPrint("message = ${err.message}");
+    debugPrint("stackTrace = $err");
     debugPrint("\n");
   }
 
-  Future<Response> handleFailed(RespData respData) {
+  Future<Response> handleFailed(ResponseData respData) {
     debugPrint('---api-response--->error---->$respData');
-    if (respData.errorCode == -1001) {
+    if (respData.code == -1001) {
       // 由于cookie过期,所以需要清除本地存储的登录信息
 //      StorageManager.localStorage.deleteItem(UserModel.keyUser);
       // 需要登录
       throw const UnAuthorizedException();
     }
-    return http.reject(respData.errorMsg);
+    return http.dio.reject(respData.message);
   }
 
 
+}
+
+/// 子类需要重写
+abstract class BaseResponseData {
+  int code = 0;
+  String message;
+  dynamic data;
+
+  bool get success;
+
+  BaseResponseData({this.code, this.message, this.data});
+
+  @override
+  String toString() {
+    return 'BaseRespData{code: $code, message: $message, data: $data}';
+  }
+}
+
+class ResponseData extends BaseResponseData {
+  bool get success => 0 == code;
+
+  ResponseData.fromJson(Map<String, dynamic> json) {
+    code = json['errorCode'];
+    message = json['errorMsg'];
+    data = json['data'];
+  }
 }

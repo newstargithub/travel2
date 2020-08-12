@@ -3,21 +3,18 @@ import 'dart:collection';
 import 'package:roll_demo/bean/PageData.dart';
 import 'package:roll_demo/bean/User.dart';
 import 'package:roll_demo/bean/ArticleTab.dart';
-import 'package:roll_demo/net/Http.dart';
+import 'package:roll_demo/model/repository/wan_android_api.dart';
 
 ///数据仓库
 class WanAndroidRepository {
   /// 公众号分类
   static Future<List<ArticleTab>> fetchWechatAccounts() async {
     var response = await http.get('wxarticle/chapters/json');
-    return response.data
-        .weatherName2IconMap<ArticleTab>((item) => ArticleTab.fromJsonMap(item))
-        .toList();
+    return response.data.map<ArticleTab>((item) => ArticleTab.fromJsonMap(item)).toList();
   }
 
   /// 公众号文章列表
-  static Future<ArticlePageData> fetchAccountArticles(
-      int id, int page) async {
+  static Future<ArticlePageData> fetchAccountArticles(int id, int page) async {
     var response = await http.get('wxarticle/list/$id/$page/json');
     return ArticlePageData.fromJson(response.data);
   }
@@ -32,7 +29,8 @@ class WanAndroidRepository {
     Map<String, dynamic> queryParameters = HashMap();
     queryParameters["username"] = username;
     queryParameters["password"] = password;
-    var response = await http.post('user/login', queryParameters: queryParameters);
+    var response =
+        await http.post('user/login', queryParameters: queryParameters);
     return User.fromJson(response.data);
   }
 
@@ -41,12 +39,14 @@ class WanAndroidRepository {
   方法：POST
   参数
   username,password,repassword*/
-  static Future<User> register(String username, String password, String repassword) async {
+  static Future<User> register(
+      String username, String password, String repassword) async {
     Map<String, dynamic> queryParameters = HashMap();
     queryParameters["username"] = username;
     queryParameters["password"] = password;
     queryParameters["repassword"] = repassword;
-    var response = await http.post('user/register', queryParameters: queryParameters);
+    var response =
+        await http.post('user/register', queryParameters: queryParameters);
     return User.fromJson(response.data);
   }
 
@@ -87,7 +87,7 @@ class WanAndroidRepository {
   static Future<List<ArticleTab>> fetchProjectTab() async {
     var response = await http.get('project/tree/json');
     return response.data
-        .weatherName2IconMap<ArticleTab>((item) => ArticleTab.fromJsonMap(item))
+        .map<ArticleTab>((item) => ArticleTab.fromJsonMap(item))
         .toList();
   }
 
@@ -102,5 +102,4 @@ class WanAndroidRepository {
     var response = await http.get('project/list/$page/json?cid=$cid');
     return ArticlePageData.fromJson(response.data);
   }
-
 }

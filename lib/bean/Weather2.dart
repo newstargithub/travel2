@@ -8,7 +8,7 @@ class Weather2 implements IWeather {
   String sunset1;
   String updatetime;
   String wendu;
-  FengliBean fengli;
+//  FengliBean fengli;
   ForecastBean forecast;
   YesterdayBean yesterday;
   ZhishusBean zhishus;
@@ -21,7 +21,7 @@ class Weather2 implements IWeather {
       this.sunset1,
       this.updatetime,
       this.wendu,
-      this.fengli,
+//      this.fengli,
       this.forecast,
       this.yesterday,
       this.zhishus});
@@ -34,8 +34,8 @@ class Weather2 implements IWeather {
     this.sunset1 = json['sunset_1'];
     this.updatetime = json['updatetime'];
     this.wendu = json['wendu'];
-    this.fengli =
-        json['fengli'] != null ? FengliBean.fromJson(json['fengli']) : null;
+//    this.fengli =
+//        json['fengli'] != null ? FengliBean.fromJson(json['fengli']) : null;
     this.forecast = json['forecast'] != null
         ? ForecastBean.fromJson(json['forecast'])
         : null;
@@ -55,9 +55,9 @@ class Weather2 implements IWeather {
     data['sunset_1'] = this.sunset1;
     data['updatetime'] = this.updatetime;
     data['wendu'] = this.wendu;
-    if (this.fengli != null) {
-      data['fengli'] = this.fengli.toJson();
-    }
+//    if (this.fengli != null) {
+//      data['fengli'] = this.fengli.toJson();
+//    }
     if (this.forecast != null) {
       data['forecast'] = this.forecast.toJson();
     }

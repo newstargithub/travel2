@@ -46,8 +46,9 @@ import 'util/constant.dart';
 //Flutter应用中main函数为应用程序的入口
 //=>符号，这是Dart中单行函数或方法的简写
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = (FlutterErrorDetails details) async {
-    //转发至Zone中 No implementation found for method setup on channel flutter_crash_plugin
+    //转发至Zone中
     Zone.current.handleUncaughtError(details.exception, details.stack);
   };
   if (Global.isRelease) {

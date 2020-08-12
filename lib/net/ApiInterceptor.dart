@@ -18,7 +18,7 @@ class ApiInterceptor extends Interceptor {
 //    debugPrint('---api-request--->url--> ${options.baseUrl}${options.path}' +
 //        ' queryParameters: ${options.queryParameters}');
 //    debugPrint('---api-request--->data--->${options.data}');
-    return options;
+    return super.onRequest(options);
   }
 
   @override

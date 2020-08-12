@@ -9,7 +9,14 @@ class ArticlePageData {
   int total;
   List<Article> datas;
 
-  ArticlePageData({this.over, this.curPage, this.offset, this.pageCount, this.size, this.total, this.datas});
+  ArticlePageData(
+      {this.over,
+      this.curPage,
+      this.offset,
+      this.pageCount,
+      this.size,
+      this.total,
+      this.datas});
 
   ArticlePageData.fromJson(Map<String, dynamic> json) {
     this.over = json['over'];
@@ -18,7 +25,9 @@ class ArticlePageData {
     this.pageCount = json['pageCount'];
     this.size = json['size'];
     this.total = json['total'];
-    this.datas = (json['datas'] as List)!=null?(json['datas'] as List).map((i) => Article.fromJson(i)).toList():null;
+    this.datas = (json['datas'] as List) != null
+        ? (json['datas'] as List).map((i) => Article.fromJson(i)).toList()
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -29,10 +38,8 @@ class ArticlePageData {
     data['pageCount'] = this.pageCount;
     data['size'] = this.size;
     data['total'] = this.total;
-    data['datas'] = this.datas != null?this.datas.map((i) => i.toJson()).toList():null;
+    data['datas'] =
+        this.datas != null ? this.datas.map((i) => i.toJson()).toList() : null;
     return data;
   }
-
 }
-
-

@@ -97,9 +97,9 @@ class ApiStrategy {
               cancelToken: token);
         }
       } else {
-        if (params != null && params.isNotEmpty || formData.isNotEmpty) {
+        if (params != null && params.isNotEmpty || formData.length != 0) {
           response = await _client.post(url,
-              data: formData?? FormData.from(params),
+              data: formData?? FormData.fromMap(params),
               cancelToken: token,
               onReceiveProgress: progressCallback);
         } else {

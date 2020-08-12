@@ -24,7 +24,7 @@ class ArticleTab {
 
   factory ArticleTab.fromJson(Map<String, dynamic> map){
     return ArticleTab(
-        children: List<ArticleTab>.from(map["children"].weatherName2IconMap((it) => ArticleTab.fromJsonMap(it))),
+        children: List<ArticleTab>.from(map["children"]((it) => ArticleTab.fromJsonMap(it))),
         courseId: map['courseId'],
         id: map['id'],
         name : map['name'],
@@ -36,7 +36,7 @@ class ArticleTab {
   }
 
   ArticleTab.fromJsonMap(Map<String, dynamic> map) :
-    children = List<ArticleTab>.from(map["children"].weatherName2IconMap((it) => ArticleTab.fromJsonMap(it))),
+    children = List<ArticleTab>.from(map["children"].map((it) => ArticleTab.fromJsonMap(it))),
     courseId = map['courseId'],
     id = map['id'],
     name = map['name'],
